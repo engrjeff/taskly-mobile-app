@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:taskly_mobile/core/password_field.dart';
 import 'package:taskly_mobile/core/primary_button.dart';
+import 'package:taskly_mobile/screens/home_screen.dart';
 import 'package:taskly_mobile/screens/signup_screen.dart';
-import 'package:taskly_mobile/screens/tasks_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,11 +20,12 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Logged in!'),
+          duration: Duration(seconds: 2),
         ),
       );
 
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const TasksScreen()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     }
   }
 

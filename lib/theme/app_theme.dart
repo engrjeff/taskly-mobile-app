@@ -11,10 +11,13 @@ class AppTheme {
         primary: Palette.primary,
       ),
       appBarTheme: theme.appBarTheme.copyWith(
-        backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: theme.iconTheme.copyWith(
-          color: Palette.primary,
+        backgroundColor: Colors.white,
+        foregroundColor: Palette.almostBlack,
+        titleTextStyle: const TextStyle(
+          color: Palette.almostBlack,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -40,6 +43,12 @@ class AppTheme {
       snackBarTheme: theme.snackBarTheme.copyWith(
         behavior: SnackBarBehavior.floating,
       ),
+      floatingActionButtonTheme: theme.floatingActionButtonTheme.copyWith(
+        backgroundColor: Palette.primary,
+      ),
+      checkboxTheme: theme.checkboxTheme.copyWith(
+        fillColor: const MaterialStatePropertyAll(Palette.primary),
+      ),
     );
   }
 
@@ -55,6 +64,7 @@ class AppTheme {
       ),
       appBarTheme: darkTheme.appBarTheme.copyWith(
         backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
         elevation: 0,
         iconTheme: darkTheme.iconTheme.copyWith(
           color: Palette.primary,
@@ -80,12 +90,26 @@ class AppTheme {
           foregroundColor: Colors.white,
         ),
       ),
+      chipTheme: darkTheme.chipTheme.copyWith(
+        selectedColor: Palette.primary,
+        labelStyle: const TextStyle(fontSize: 16, color: Palette.almostBlack),
+        secondaryLabelStyle: const TextStyle(color: Colors.white),
+      ),
       snackBarTheme: darkTheme.snackBarTheme.copyWith(
         behavior: SnackBarBehavior.floating,
         backgroundColor: Palette.primary,
         contentTextStyle: const TextStyle(color: Colors.white),
       ),
       scaffoldBackgroundColor: Palette.bgPrimary,
+      floatingActionButtonTheme: darkTheme.floatingActionButtonTheme.copyWith(
+        backgroundColor: Palette.primary,
+      ),
+      bottomNavigationBarTheme: darkTheme.bottomNavigationBarTheme.copyWith(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        selectedItemColor: Palette.primary,
+      ),
+      dialogBackgroundColor: Palette.softBgPrimary,
     );
   }
 }

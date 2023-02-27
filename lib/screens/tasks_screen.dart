@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:taskly_mobile/core/greeting.dart';
 import 'package:taskly_mobile/core/task_item.dart';
+import 'package:taskly_mobile/core/theme_switcher.dart';
+import 'package:taskly_mobile/providers/theme_provider.dart';
 import 'package:taskly_mobile/theme/palette.dart';
 
 class TasksScreen extends StatefulWidget {
@@ -22,43 +26,16 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = context.watch<ThemeProvider>().currentThemeMode;
+
+    final isLight = themeMode == ThemeMode.light;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
         leadingWidth: double.maxFinite,
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Row(
-            children: [
-              const CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage('https://jeffsegovia.dev/me.jpg'),
-              ),
-              const SizedBox(width: 16),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Good morning 👋',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey.shade500,
-                    ),
-                  ),
-                  const Text(
-                    'Jeff Segovia',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Palette.almostBlack,
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
+        leading: const Greeting(),
+        actions: const [ThemeSwitcher()],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -70,7 +47,6 @@ class _TasksScreenState extends State<TasksScreen> {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
-                color: Palette.almostBlack,
               ),
             ),
             const SizedBox(height: 8),
@@ -80,6 +56,12 @@ class _TasksScreenState extends State<TasksScreen> {
                   .map(
                     (status) => ChoiceChip(
                       label: Text(status),
+                      backgroundColor: isLight
+                          ? Theme.of(context).chipTheme.backgroundColor
+                          : Palette.softBgPrimary,
+                      labelStyle: TextStyle(
+                        color: isLight ? Palette.almostBlack : Colors.white,
+                      ),
                       selected: status == _selectedStatus,
                       onSelected: (isSelected) {
                         if (!isSelected) return;
@@ -92,40 +74,16 @@ class _TasksScreenState extends State<TasksScreen> {
                   .toList(),
             ),
             Flexible(
-              child: ListView(
+              child: ListView.separated(
                 shrinkWrap: true,
-                children: const [
-                  TaskItem(),
-                  TaskItem(),
-                  TaskItem(),
-                  TaskItem(),
-                  TaskItem(),
-                  TaskItem(),
-                  TaskItem(),
-                  TaskItem(),
-                ],
+                itemCount: 20,
+                itemBuilder: (context, index) => const TaskItem(),
+                separatorBuilder: (context, index) => const SizedBox(height: 8),
               ),
-            )
+            ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.task),
-              label: 'Tasks',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Account',
-            ),
-          ]),
     );
   }
 }
